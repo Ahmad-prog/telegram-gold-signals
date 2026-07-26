@@ -1,6 +1,6 @@
 # data_archive — frozen research inputs (reproducibility)
 
-These gzipped files are the EXACT inputs behind the numbers in `design-doc.md` §8–9.
+These gzipped files are the EXACT inputs behind the numbers in `docs/design-doc.md` §8–9.
 `data/` itself is gitignored (bulky / contains per-day API cache); restore with:
 
 ```bash

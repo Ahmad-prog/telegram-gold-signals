@@ -6,11 +6,11 @@ backtested strategy targeting GoatFundedTrader prop-firm evaluations.
 
 > ⚠️ Research/educational project. Automating a personal Telegram account is
 > against Telegram's ToS; trading involves substantial risk of loss. The edge is
-> **regime-fitted** (see `design-doc.md` §10) — a kill-switch is part of the design.
+> **regime-fitted** (see `docs/design-doc.md` §10) — a kill-switch is part of the design.
 
 ---
 
-## The locked strategy (full spec: [`design-doc.md`](design-doc.md))
+## The locked strategy (full spec: [`docs/design-doc.md`](docs/design-doc.md))
 
 | Rule | Value |
 |---|---|
@@ -28,7 +28,6 @@ config: `parameters.yml → live:`.
 ## Repository layout
 
 ```
-design-doc.md          ★ normative spec: strategy, exact semantics, repro checkpoints
 parameters.yml         all knobs incl. the locked `live:` strategy block
 src/
   engine.py            1-min candle-walk backtest engine (exit strategies A/B/C/D)
@@ -37,11 +36,13 @@ src/
   fetch_channel.py     pull any channel's history -> data/raw_<tag>.jsonl
   fetch_prices.py      TwelveData 1-min XAU/USD fetcher (per-day cache)
   login.py             one-time Telegram login (file-driven, no prompt)
+  smoke_test.py        end-to-end test: telegram -> parse -> gates -> alert
   list_chats.py        helper: find chat/sender handles
 tests/
   validate_engine.py   12 synthetic-candle engine tests (must stay green)
 data_archive/          frozen research inputs (gzipped) — restores data/, see its README
 docs/
+  design-doc.md        ★ normative spec: strategy, exact semantics, repro checkpoints
   goat_support_question.md   GFT compliance question (answered & approved in writing)
 ```
 
@@ -66,12 +67,12 @@ preserved at git tag **`research-v1`**:
 
 ```bash
 git checkout research-v1
-# then follow design-doc.md §7 step by step; §8 lists the expected checkpoints
+# then follow docs/design-doc.md §7 step by step; §8 lists the expected checkpoints
 ```
 
 ## Status / roadmap
 
 - [x] Data pipeline, engine, parsers, 3-year + 1-year studies
 - [x] Strategy locked (`design-doc.md`, 2026-06-30) + GFT compliance confirmed in writing
-- [ ] **Next:** `listener.py` + `executor.py` + `watchdog.py` (design-doc §11) — paper mode on MT5 demo first
+- [ ] **Next:** `listener.py` + `executor.py` + `watchdog.py` (docs/design-doc.md §11) — paper mode on MT5 demo first
 - [ ] 4–6 weeks paper validation → one GFT evaluation
