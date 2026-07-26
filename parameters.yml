@@ -107,7 +107,18 @@ live:
   exit_strategy: A                      # 100% close at nearest TP; no BE/trail
   max_concurrent: 1                     # FCFS; drop signals while a trade is open
   max_signal_age_min: 3                 # skip stale signals (bot downtime, busy)
-  risk_ladder_pct: [1.75, 1.25, 1.0]    # down 1 rung per loss, reset on win
+  account_profile: prop                 # which risk profile the bot runs: prop | personal
+  risk_profiles:
+    prop:                               # GFT evaluation/funded (firm limits apply)
+      risk_ladder_pct: [1.75, 1.25, 1.0]
+      compounding: false                # additive % of phase-start balance
+    personal:                           # own real account — no firm limits
+      risk_ladder_pct: [5.0]            # ★ user choice: FLAT 5% per trade
+                                        # 6mo Jan-Jun26 backtest: +86.8%, maxDD -31.5%,
+                                        #   worst day -10.1%; full-yr +228%, maxDD -32.8%
+                                        # alt [5.0, 3.5, 2.5]: same return, DD -29%, worst day -8.6%
+      compounding: true                 # risk % of CURRENT equity
+  risk_ladder_pct: [1.75, 1.25, 1.0]    # (legacy key = prop profile; kept for compat)
   daily_stop_mode: consec_losses
   daily_consec_loss_stop: 2
   max_spread_pips: 5                    # skip entry if live spread exceeds this
