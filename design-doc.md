@@ -194,6 +194,15 @@ whose entry epoch < the running `busy_until`; else take it and set
 
 ## 7. Reproduction procedure (agent instructions)
 
+> **NOTE (repo cleanup 2026-07-26):** the `research/` pipeline and legacy analysis
+> scripts were removed from the main branch to keep the repo lean. To reproduce
+> the numbers, first check out the tagged snapshot that contains everything:
+> `git checkout research-v1` — then follow the steps below exactly as written
+> (paths in this section refer to that tag's layout, where `engine.py` and the
+> parsers live at repo root). On the current main branch the same modules live in
+> `src/` (`parse_signals.py` → `src/parse_gary.py`,
+> `parse_goldscalperninja.py` → `src/parse_gsn.py`).
+
 Environment: Linux/WSL, Python 3 with `numpy`, `pyyaml` (`pip install -r
 requirements.txt` covers the rest). Working dir = repo root. The preserved `data/`
 files from §2 must be in place. `parameters.yml` must have `filters.min_sl_pips: 20`,
@@ -329,7 +338,22 @@ only, ever (GFT ruling condition).
 
 ---
 
-## 12. File inventory (research code)
+## 12. File inventory
+
+**Current main branch (lean layout):**
+
+| File | Role |
+|---|---|
+| `src/engine.py` | candle-walk trade simulator (all exit strategies, `exit_date`) |
+| `src/parse_gary.py` / `src/parse_gsn.py` | per-channel parsers (§3) |
+| `src/fetch_channel.py` | fetch any channel's history (`python3 src/fetch_channel.py <chat> <tag> [months]`) |
+| `src/fetch_prices.py` | TwelveData 1-min XAU/USD day fetcher (cached) |
+| `src/login.py` / `src/list_chats.py` | Telegram auth + chat discovery helpers |
+| `tests/validate_engine.py` | 12 synthetic engine tests — must stay green |
+| `data_archive/` | frozen research inputs (§2) |
+| `docs/goat_support_question.md` | GFT compliance question (answered/approved) |
+
+**Research pipeline (git tag `research-v1` only):**
 
 | File | Role |
 |---|---|

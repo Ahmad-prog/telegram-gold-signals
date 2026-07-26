@@ -15,7 +15,7 @@ import json
 import re
 from pathlib import Path
 
-DATA = Path(__file__).parent / "data"
+DATA = Path(__file__).resolve().parent.parent / "data"
 RAW = DATA / "raw_goldscalperninja.jsonl"
 OUT = DATA / "signals_goldscalperninja.jsonl"
 UNPARSED = DATA / "unparsed_goldscalperninja.jsonl"

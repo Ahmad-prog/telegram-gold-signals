@@ -24,7 +24,7 @@ load_dotenv()
 API_ID = int(os.environ["TG_API_ID"])
 API_HASH = os.environ["TG_API_HASH"]
 SESSION = os.environ.get("TG_SESSION", "signals")
-OUT_DIR = Path(__file__).parent / "data"
+OUT_DIR = Path(__file__).resolve().parent.parent / "data"
 OUT_DIR.mkdir(exist_ok=True)
 
 

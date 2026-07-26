@@ -20,7 +20,7 @@ from pathlib import Path
 
 import yaml
 
-HERE = Path(__file__).parent
+HERE = Path(__file__).resolve().parent.parent   # repo root
 
 
 # ----------------------------- config / data -----------------------------

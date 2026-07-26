@@ -30,8 +30,8 @@ SESSION = os.environ.get("TG_SESSION", "signals")
 PHONE = os.environ["TG_PHONE"]
 PASSWORD = os.environ.get("TG_PASSWORD", "")
 
-CODE_FILE = Path(__file__).parent / "login_code.txt"
-SESSION_PATH = Path(__file__).parent / SESSION
+CODE_FILE = Path(__file__).resolve().parent.parent / "login_code.txt"
+SESSION_PATH = Path(__file__).resolve().parent.parent / SESSION
 
 
 async def wait_for_code(timeout=900):

@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 KEY = os.environ.get("TWELVEDATA_KEY", "").strip()
-DATA = Path(__file__).parent / "data"
+DATA = Path(__file__).resolve().parent.parent / "data"
 SIG = DATA / "signals.jsonl"
 OUT = DATA / "xauusd_1m.csv"
 RAW_DIR = DATA / "prices_raw"

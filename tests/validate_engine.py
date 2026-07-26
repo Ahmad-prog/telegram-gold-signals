@@ -14,6 +14,9 @@ import copy
 import sys
 from datetime import datetime, timezone, timedelta
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 from engine import simulate
 
 BASE = datetime(2026, 1, 5, 10, 0, tzinfo=timezone.utc)
