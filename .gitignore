@@ -1,0 +1,17 @@
+# secrets — NEVER commit
+.env
+*.session
+*.session-journal
+login_code.txt
+
+# working data (bulky; restore from data_archive/ — see its README)
+data/
+__pycache__/
+*.pyc
+
+# research pipeline outputs (regenerable via design-doc.md §7)
+research/trades/
+research/deep/
+research/candidates.json
+research/screen_summary.txt
+research/*.npz

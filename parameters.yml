@@ -1,0 +1,132 @@
+# =====================================================================
+# parameters.yml — central config for the GARY GOLD TRADER backtest
+# Every script (backtest.py, stress_test.py) reads from here.
+# Change values here, never hard-code them in the scripts.
+# =====================================================================
+
+# ---- Instrument / market mechanics ----
+market:
+  pip_value: 0.10           # $ price move per 1 pip for XAUUSD (4000.00 -> 4000.10)
+  round_trip_cost_pips: 3   # spread + commission, charged once per trade (entry+exit)
+  slippage_pips: 0.0        # extra adverse fill on entry & each exit (per side)
+
+# ---- Position entry ----
+entry:
+  mode: market_next         # how the trade is filled:
+                            #   market_next = open of first 1-min candle after the post
+                            #   zone_touch  = only fill if price trades into [entry_low, entry_high]
+  zone_touch_max_wait_min: 60   # (zone_touch only) give up if zone not touched within N minutes
+
+# ---- Exit / trade management ----
+exit:
+  strategy: D               # ★ LOCKED: 0.5% risk + D = 100% prop pass, ~7.7wk to funded
+                            # A = close 100% at TP1
+                            # B = close 100% at TP2
+                            # C = close 50% at TP1, move SL to breakeven, run rest to TP2
+                            # D = close 50% at TP1, BE after TP1, then TRAIL the rest up a
+                            #     ladder: TP3 -> SL to TP2, TP4 -> SL to TP3, ... till final TP
+  tp1_close_fraction: 0.5   # (C/D) fraction closed at TP1
+  move_to_breakeven: true   # (C/D) move stop to entry after TP1 — key to D's safety
+  ladder_rungs: 5           # (strategy D) total TP rungs; TP3+ synthesized at the
+                            #              TP2-TP1 step since Gary only posts TP1/TP2
+  same_candle_tie: pessimistic  # if one candle hits BOTH stop and target:
+                                #   pessimistic = assume STOP hit first (conservative)
+                                #   optimistic  = assume TARGET hit first
+  no_time_exit: true        # true = run trade across days until SL/TP (no EOD cutoff)
+  max_hold_minutes: 0       # 0 = unlimited (only used if no_time_exit is false)
+
+# ---- Risk / account model ----
+risk:
+  account_size: 100000      # account / prop-firm balance in $
+  risk_per_trade_pct: 0.5   # % of account risked per trade (1R = this % at the SL)
+  # P&L is reported in pips, R-multiples, AND % of account using this sizing.
+
+# ---- Account type (used by account_sim.py) ----
+account:
+  mode: evaluation          # evaluation | funded | real
+                            #   evaluation = pass the +8%/+6% challenge w/o breach
+                            #   funded     = trade firm capital; breach = lose account; no pass target
+                            #   real       = your own money; no firm limits, risk of RUIN instead
+  compounding: false        # false = risk % of STARTING balance (prop accounting)
+                            # true  = risk % of CURRENT equity (normal for a real account)
+  funded_payout_target_pct: 8.0   # (funded) report time to reach one payout cycle
+  ruin_pct: 50.0            # (real) equity loss that counts as "account blown"
+  daily_loss_stop_pct: null # (pct mode) self-imposed daily stop; null = use prop.daily_loss_stop_pct
+  daily_stop_mode: consec_losses  # how the daily stop triggers:
+                            #   pct           = stop when day loss reaches daily_loss_stop_pct
+                            #   net_losses    = stop when (losses - wins) that day >= daily_net_loss_stop
+                            #   consec_losses = stop after N losses IN A ROW (a win resets the streak)
+                            #                   ★ default: bounds the worst cluster to exactly N losses
+  daily_net_loss_stop: 2    # (net_losses mode) stop when losses exceed wins by this many
+  daily_consec_loss_stop: 2 # (consec_losses mode) stop after this many losses in a row
+
+# ---- Data filters ----
+filters:
+  max_sl_dollars: 40        # skip signals whose entry->SL distance exceeds this (parse junk)
+  min_sl_pips: 20           # ★ ON for GOAT compliance: ultra-tight stops need ~10x lot
+                            #   size (flagged as "too risky"/large-volume) and are hard to
+                            #   execute on gold. 20p minimum keeps sizing sane.
+  skip_no_tp: true          # skip signals with no parseable TP (can't run strategy C)
+  skip_addons: false        # true = skip "Buy More/Again" re-entry signals
+
+# ---- Prop-firm rules (used by prop_sim.py) ----
+prop:
+  strategy: D               # which exit strategy to run the prop sim on
+  risk_per_trade_pct: 0.5   # ★ LOCKED at 0.5% -> 100% pass across all start dates
+  daily_loss_stop_pct: 2.0  # self-imposed: stop trading for the day at this loss
+                            #   (at 0.5% risk that's ~4 stop-outs; keeps well under firm 4%)
+  firm_daily_dd_pct: 4.0    # firm's hard daily drawdown limit -> breach = FAIL
+  firm_max_dd_pct: 10.0     # firm's hard overall drawdown limit -> breach = FAIL
+  profit_target_pct: 8.0    # Phase-1 target; stop the sim once reached
+  max_dd_mode: static       # 'static' (fixed floor at start-10%) or 'trailing' (from peak)
+  day_reset_utc_hour: 21    # daily DD resets at this UTC hour (21:00 UTC = 2am Pakistan)
+
+# ---- GOAT compliance rules (enforced by compliant_sim.py and the live bot) ----
+compliance:
+  no_hedge: true            # NEVER hold opposite positions on gold (GOAT: strict ban).
+  hedge_policy: skip        # when an opposite signal arrives while in a trade:
+                            #   skip = ignore the new signal (conservative, default)
+                            #   flip = close the open position, then open the new one
+  no_add_to_loser: true     # ignore "Buy More/Again" add-ons when the open position is
+                            #   underwater (avoids looking like a grid/Martingale system)
+  max_concurrent: 3         # cap simultaneous open positions (risk + anti-"large volume")
+  trend_filter: false       # OFF — take every Gary signal as-is (don't alter his
+                            #   entry selection). Our own logic is the EXIT management only.
+  trend_lookback_min: 240   # (only used if trend_filter is true)
+  one_account_only: true    # DOC FLAG: run on exactly ONE account — no duplicating
+                            #   trades/ideas across eval or funded accounts (GOAT ban)
+
+# ---- LOCKED LIVE STRATEGY (see design-doc.md — normative spec) ----
+live:
+  strategy_name: ladder_sell_A          # locked 2026-06-30
+  channels: [Gary_TheTrader, GoldScalperNinja]
+  side: sell_only                       # skip ALL buy signals
+  fresh_only: true                      # skip add-on ("again/more/round N") signals
+  sl_pips_min: 40                       # take only 40 <= sl_pips <= 120
+  sl_pips_max: 120
+  exit_strategy: A                      # 100% close at nearest TP; no BE/trail
+  max_concurrent: 1                     # FCFS; drop signals while a trade is open
+  max_signal_age_min: 3                 # skip stale signals (bot downtime, busy)
+  risk_ladder_pct: [1.75, 1.25, 1.0]    # down 1 rung per loss, reset on win
+  daily_stop_mode: consec_losses
+  daily_consec_loss_stop: 2
+  max_spread_pips: 5                    # skip entry if live spread exceeds this
+  kill_switch:
+    rolling_trades: 60                  # stop if rolling 60-trade R <= -10
+    rolling_r_floor: -10
+    max_consec_losing_months: 2
+
+# ---- File paths (relative to this folder) ----
+paths:
+  signals: data/signals.jsonl
+  prices: data/xauusd_1m.csv
+  trades_out: data/backtest_trades.csv
+  stress_out: data/stress_results.csv
+
+# ---- Stress-test sweep ranges (used by stress_test.py) ----
+stress:
+  cost_pips: [0, 1, 2, 3, 4, 5]
+  slippage_pips: [0.0, 0.5, 1.0]
+  strategies: [A, B, C, D]
+  entry_modes: [market_next, zone_touch]
+  same_candle_tie: [pessimistic, optimistic]

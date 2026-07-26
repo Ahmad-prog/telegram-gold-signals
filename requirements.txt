@@ -1,0 +1,4 @@
+telethon>=1.36      # Telegram client (login + fetch as your own account)
+python-dotenv>=1.0  # load .env secrets
+requests>=2.31      # TwelveData price API
+pyyaml>=6.0         # parameters.yml config
