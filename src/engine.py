@@ -60,7 +60,13 @@ def _targets(side, entry, sig, pip):
         tp2 = entry + sign * (tps[1] if len(tps) > 1 else tps[0]) * pip
         return tp1, tp2
     if sig["tp_mode"] == "price" and sig["tp_raw"]:
-        ts = sorted(sig["tp_raw"], reverse=(side == "sell"))   # nearest first
+        # GEOMETRY GUARD: a target must sit on the PROFITABLE side of the fill
+        # (trader typos like "TP2 3239" for 3339 on a buy otherwise become an
+        # instantly-hit target below entry -> fake catastrophic loss).
+        good = [t for t in sig["tp_raw"] if (t > entry) == (side == "buy")]
+        if not good:
+            return None, None
+        ts = sorted(good, reverse=(side == "sell"))            # nearest first
         return ts[0], ts[1] if len(ts) > 1 else ts[0]
     return None, None
 
@@ -108,6 +114,8 @@ def simulate(sig, candles, entry_idx, cfg):
         return None
     if sl_dist / pip < filt.get("min_sl_pips", 0):   # untradeable tight stop -> R outlier
         return None
+    if (sl < entry) != long:                         # SL on wrong side of fill
+        return None                                  # (typo / price ran past SL)
 
     tp1, tp2 = _targets(side, entry, sig, pip)
     if tp1 is None:

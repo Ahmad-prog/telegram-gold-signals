@@ -122,6 +122,14 @@ live:
   daily_stop_mode: consec_losses
   daily_consec_loss_stop: 2
   max_spread_pips: 5                    # skip entry if live spread exceeds this
+  max_price_drift_pct: 1.0              # skip if signal entry is >this% from live price (stale)
+  llm_layer:                            # Claude second-opinion parser (src/llm_parser.py)
+    enabled: true
+    model: claude-opus-5
+    effort: low                         # bounded extraction on a latency-sensitive path
+    on_conflict: skip                   # regex vs LLM disagree -> never guess with money
+    on_llm_error: regex_only            # API down -> fall back to the deterministic parser
+    run_when: [regex_failed, management, edited, new_provider]
   kill_switch:
     rolling_trades: 60                  # stop if rolling 60-trade R <= -10
     rolling_r_floor: -10
