@@ -117,21 +117,27 @@ class TradeRegistry:
                  sl_source=sl_source, tp_source=tp_source)
         return self.get(msg_id)
 
-    def mark_open(self, msg_id: int, ticket: int, fill_price: float, lots: float):
+    def mark_open(self, msg_id: int, ticket: int, fill_price: float, lots: float,
+                  at: str | None = None):
+        """`at` lets a simulation stamp the CANDLE time. Live callers omit it.
+        Getting this wrong collapses every simulated trade into one trading day,
+        which silently disables the daily stop and the monthly kill-switch."""
         self.db.execute(
             "UPDATE trades SET state='OPEN', ticket=?, fill_price=?, lots=?, opened_at=?"
             " WHERE msg_id=? AND state='PENDING'",
-            (ticket, fill_price, lots, _now(), msg_id),
+            (ticket, fill_price, lots, at or _now(), msg_id),
         )
         self.db.commit()
         self.log("opened", msg_id, ticket=ticket, fill=fill_price, lots=lots)
         return self.get(msg_id)
 
-    def mark_closed(self, msg_id: int, reason: str, realized_r: float | None = None):
+    def mark_closed(self, msg_id: int, reason: str, realized_r: float | None = None,
+                    at: str | None = None):
+        """`at` lets a simulation stamp the CANDLE time (see mark_open)."""
         self.db.execute(
             "UPDATE trades SET state='CLOSED', closed_at=?, close_reason=?, realized_r=?"
             " WHERE msg_id=? AND state IN ('PENDING','OPEN')",
-            (_now(), reason, realized_r, msg_id),
+            (at or _now(), reason, realized_r, msg_id),
         )
         self.db.commit()
         self.log("closed", msg_id, reason=reason, r=realized_r)

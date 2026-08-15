@@ -58,6 +58,8 @@ class RiskState:
         prof = live["risk_profiles"][live["account_profile"]]
         self.rungs: list[float] = list(prof["risk_ladder_pct"])
         self.consec_stop: int = int(cfg["account"].get("daily_consec_loss_stop", 2))
+        # hard guard on the firm's daily limit — set BELOW it, not equal to it
+        self.daily_cap: float = float(live.get("max_daily_loss_pct", 0) or 0)
         ks = live.get("kill_switch", {}) or {}
         self.ks_trades = int(ks.get("rolling_trades", 60))
         self.ks_floor = float(ks.get("rolling_r_floor", -10))
@@ -109,6 +111,43 @@ class RiskState:
 
     def daily_stop_hit(self, now: str | None = None) -> bool:
         return self.day_consec_losses(now) >= self.consec_stop
+
+    def day_pnl_pct(self, now: str | None = None) -> float:
+        """Realized P&L today, in % of balance, priced at each trade's own rung.
+
+        Reconstructs the rung each trade was taken at by walking history, so the
+        figure matches what actually hit the account rather than assuming one
+        risk level.
+        """
+        today = day_key(now or datetime.now(timezone.utc).isoformat())
+        pnl, streak = 0.0, 0
+        for t in self._closed():
+            rung = self.rungs[min(streak, len(self.rungs) - 1)]
+            when = self._when(t)
+            if when and day_key(when) == today:
+                pnl += t["realized_r"] * rung
+            streak = 0 if t["realized_r"] > 0 else streak + 1
+        return pnl
+
+    def daily_loss_cap_hit(self, now: str | None = None,
+                           next_trade_risk: float | None = None) -> tuple[bool, str]:
+        """Hard guard on GFT's -4% daily limit — a breach LOSES the account.
+
+        The consecutive-loss stop alone is not sufficient: a day that goes
+        loss, win, loss, loss stays under 2 CONSECUTIVE losses at each point
+        yet can still reach roughly -4.15%. This checks the realized total AND
+        what the next trade could add before allowing it.
+        """
+        if self.daily_cap <= 0:
+            return False, ""
+        pnl = self.day_pnl_pct(now)
+        if pnl <= -self.daily_cap:
+            return True, f"daily loss {pnl:+.2f}% at/over the {-self.daily_cap:.2f}% cap"
+        risk = next_trade_risk if next_trade_risk is not None else self.current_risk_pct()
+        if pnl - risk <= -self.daily_cap:
+            return True, (f"taking a {risk:.2f}% trade on {pnl:+.2f}% today could reach "
+                          f"{pnl - risk:+.2f}%, past the {-self.daily_cap:.2f}% cap")
+        return False, ""
 
     # ---------------------------------------------------------- kill switch
 
@@ -177,6 +216,9 @@ class RiskState:
         if self.daily_stop_hit(now):
             return False, (f"daily stop: {self.day_consec_losses(now)} consecutive "
                            f"losses today (limit {self.consec_stop})")
+        capped, why = self.daily_loss_cap_hit(now)
+        if capped:
+            return False, f"daily loss cap: {why}"
         return True, "ok"
 
     def snapshot(self, now: str | None = None) -> dict:
@@ -188,6 +230,8 @@ class RiskState:
             "risk_pct": self.current_risk_pct(),
             "day_consec_losses": self.day_consec_losses(now),
             "daily_stop_hit": self.daily_stop_hit(now),
+            "day_pnl_pct": round(self.day_pnl_pct(now), 2),
+            "daily_cap_hit": self.daily_loss_cap_hit(now)[0],
             "rolling_r": round(self.rolling_r(), 2),
             "consec_losing_months": self.consec_losing_months(),
             "killed": killed,

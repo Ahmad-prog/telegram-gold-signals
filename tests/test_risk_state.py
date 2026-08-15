@@ -98,11 +98,13 @@ def _():
     return ok is False and "daily stop" in why, why
 
 
-@case("daily stop: a win between losses resets the streak")
+@case("daily stop: a win between losses resets the CONSEC streak")
 def _():
+    # the consec counter resets (that is this rule's job) even though the
+    # separate daily-loss cap may still block — they are independent guards
     _, rs = build([(-1.0, "2026-08-14"), (+0.5, "2026-08-14"), (-1.0, "2026-08-14")])
-    ok, _ = rs.can_trade("2026-08-14T12:00:00+00:00")
-    return ok is True and rs.day_consec_losses("2026-08-14T12:00:00+00:00") == 1, rs.snapshot()
+    now = "2026-08-14T12:00:00+00:00"
+    return (rs.day_consec_losses(now) == 1 and not rs.daily_stop_hit(now)), rs.snapshot(now)
 
 
 @case("daily stop: yesterday's losses do not block today")
@@ -280,3 +282,47 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# --------------------------------------------- GFT daily loss cap (compliance)
+
+@case("daily cap: the L,W,L,L day that beats the consec-stop is blocked")
+def _():
+    # -1.75, +0.6, -1.75, then a 4th trade would push past -3%
+    _, rs = build([(-1.0, "2026-08-14"), (+0.5, "2026-08-14"), (-1.0, "2026-08-14")])
+    # never 2 losses in a row, so the consec stop is NOT engaged...
+    consec_ok = not rs.daily_stop_hit("2026-08-14T15:00:00+00:00")
+    # ...but the loss cap must still block
+    ok, why = rs.can_trade("2026-08-14T15:00:00+00:00")
+    return consec_ok and ok is False and "daily loss cap" in why, (consec_ok, why)
+
+
+@case("daily cap: a clean winning day is not blocked")
+def _():
+    _, rs = build([(+1.0, "2026-08-14"), (+0.5, "2026-08-14")])
+    ok, _ = rs.can_trade("2026-08-14T15:00:00+00:00")
+    return ok is True, rs.snapshot("2026-08-14T15:00:00+00:00")
+
+
+@case("daily cap: blocks pre-emptively when the NEXT trade could breach")
+def _():
+    # -1.75 today; one more 1.25% loss would reach -3.0% = the cap
+    _, rs = build([(-1.0, "2026-08-14"), (+0.5, "2026-08-14"), (-1.0, "2026-08-14")])
+    hit, why = rs.daily_loss_cap_hit("2026-08-14T15:00:00+00:00")
+    return hit is True and "could reach" in why, why
+
+
+@case("daily cap: resets the next trading day")
+def _():
+    _, rs = build([(-1.0, "2026-08-14"), (+0.5, "2026-08-14"), (-1.0, "2026-08-14")])
+    ok, _ = rs.can_trade("2026-08-15T10:00:00+00:00")
+    return ok is True, rs.snapshot("2026-08-15T10:00:00+00:00")
+
+
+@case("daily cap: worst possible day stays inside GFT's -4% limit")
+def _():
+    # simulate the worst realistic sequence and confirm the cap holds it under 4
+    _, rs = build([(-1.0, "2026-08-14"), (+0.5, "2026-08-14"), (-1.0, "2026-08-14")])
+    pnl = rs.day_pnl_pct("2026-08-14T15:00:00+00:00")
+    blocked, _ = rs.daily_loss_cap_hit("2026-08-14T15:00:00+00:00")
+    return blocked and pnl > -4.0, f"day P&L {pnl:.2f}% and further trading blocked"

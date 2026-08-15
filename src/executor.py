@@ -31,6 +31,12 @@ class Executor:
         self.live = cfg["live"]
         self.dry_run = dry_run
 
+    def _clock(self) -> str | None:
+        """Simulation clock (candle time) if the broker has one; None = live."""
+        now = getattr(self.b, "now", None)
+        t = now() if callable(now) else None
+        return t.isoformat() if t is not None else None
+
     # ------------------------------------------------------------- guards
 
     def _spread_ok(self) -> tuple[bool, float]:
@@ -72,7 +78,7 @@ class Executor:
             self.reg.log("order_rejected", mid)
             return {"action": "rejected"}
 
-        self.reg.mark_open(mid, fill.ticket, fill.price, fill.lots)
+        self.reg.mark_open(mid, fill.ticket, fill.price, fill.lots, at=self._clock())
         self.reg.log("order_filled", mid, ticket=fill.ticket,
                      price=fill.price, lots=fill.lots)
         return {"action": "opened", "ticket": fill.ticket, "price": fill.price}
@@ -113,7 +119,7 @@ class Executor:
     def _record(self, c) -> dict:
         msg_id = self._msg_for_ticket(c.ticket)
         if msg_id is not None:
-            self.reg.mark_closed(msg_id, c.reason, c.r_multiple)
+            self.reg.mark_closed(msg_id, c.reason, c.r_multiple, at=self._clock())
             self.reg.log("position_closed", msg_id, ticket=c.ticket,
                          reason=c.reason, r=c.r_multiple)
         return {"msg_id": msg_id, "reason": c.reason, "r": c.r_multiple}

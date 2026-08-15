@@ -121,6 +121,10 @@ live:
   risk_ladder_pct: [1.75, 1.25, 1.0]    # (legacy key = prop profile; kept for compat)
   daily_stop_mode: consec_losses
   daily_consec_loss_stop: 2
+  max_daily_loss_pct: 3.5               # ★ HARD guard under GFT's -4% daily limit.
+                                        #   The consec-loss stop alone is NOT enough:
+                                        #   a loss/win/loss/loss day never shows 2 in a
+                                        #   row yet can reach ~-4.15% and breach.
   max_spread_pips: 5                    # skip entry if live spread exceeds this
   max_price_drift_pct: 1.0              # skip if signal entry is >this% from live price (stale)
   defaults:                             # SAFETY NET attached to every order (never naked)
