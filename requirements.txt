@@ -4,3 +4,4 @@ requests>=2.31      # TwelveData price API
 pyyaml>=6.0         # parameters.yml config
 anthropic>=0.84   # LLM parsing layer (src/llm_parser.py)
 pydantic>=2.0     # structured-output schema for the LLM layer
+google-genai>=2.18   # Gemini classifier (src/gemini_classifier.py)

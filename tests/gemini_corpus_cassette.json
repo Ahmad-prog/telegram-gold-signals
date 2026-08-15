@@ -1,0 +1,716 @@
+[
+ {
+  "channel": "gary",
+  "msg_id": 22453,
+  "date": "2025-07-02T06:50:29+00:00",
+  "text": "Gold sell now @3331 - 3334\n\nSl: 3337\n\nTP1: 3328\nTP2: 3321",
+  "gemini": {
+   "kind": "entry",
+   "side": "sell",
+   "entry_low": 3331.0,
+   "entry_high": 3334.0,
+   "sl": 3337.0,
+   "tps": [
+    3328.0,
+    3321.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new sell order."
+  },
+  "regex": {
+   "side": "sell",
+   "sl": 3337.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 22605,
+  "date": "2025-07-09T14:06:39+00:00",
+  "text": "Share your feedback to me now guys ! 🤪 \n\n@Gary_GoldTrader\n\n#Concistencywin #WebinarMarathon",
+  "gemini": {
+   "kind": "noise",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "none",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post is a social engagement request and contains no trading signals or instructions."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 19619,
+  "date": "2025-07-18T07:33:22+00:00",
+  "text": "🔤⚡️⚡️⚡️⚡️\n\n💰 GOLD BUY 3344 - 3341\n\n🚨 SL : 3337\n\n💵 TP : 3347, 3350, 3354\n\nRISK SMART, MANAGE RISK WISELY  ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 3341.0,
+   "entry_high": 3344.0,
+   "sl": 3337.0,
+   "tps": [
+    3347.0,
+    3350.0,
+    3354.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 3337.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 22846,
+  "date": "2025-07-23T13:05:01+00:00",
+  "text": "Gold buy now @ 3414 - 3410\n\nSl: 3407\n\nTP1: 3419\nTP2: 3430",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 3410.0,
+   "entry_high": 3414.0,
+   "sl": 3407.0,
+   "tps": [
+    3419.0,
+    3430.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 3407.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 22893,
+  "date": "2025-07-25T11:35:13+00:00",
+  "text": "Gold buy now @ 3340 - 3337\n\nSl: 3334\n\nTP1: 3345\nTP2: 3355",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 3337.0,
+   "entry_high": 3340.0,
+   "sl": 3334.0,
+   "tps": [
+    3345.0,
+    3355.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 3334.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 22943,
+  "date": "2025-07-29T11:40:38+00:00",
+  "text": "Clean structure, strong momentum HIT TP1 and now running +50pips in profit. ☠️💯\n\nAs always, close half profit & set breakeven on the rest.\n\n#WebinarMarathon #GaryGoldTrader",
+  "gemini": {
+   "kind": "update",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "close_partial",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": true,
+   "confidence": 1.0,
+   "reason": "The post explicitly instructs to close half profit and set breakeven on an existing trade."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gary",
+  "msg_id": 23025,
+  "date": "2025-08-05T11:44:03+00:00",
+  "text": "Im sorry guys, as for today the gold free falling without any pullback. \n\nI want to take some fresh air first before continue with new analysis for US Session 👊🏼",
+  "gemini": {
+   "kind": "noise",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "none",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post is market commentary and personal status update, not a trade signal."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gary",
+  "msg_id": 23646,
+  "date": "2025-09-15T15:22:31+00:00",
+  "text": "Why that zone? \nWhy buying ?\nHow and when to entry ?\n\nEverything will be answered here. The only Technical Books ! you need to have. The rest is Waiting Game 📚\n\nLearn the edge of trading step -by-step using Playbook™️ @Gary_GoldTrader",
+  "gemini": {
+   "kind": "noise",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "none",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post is a promotional advertisement for trading books and educational services."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 21355,
+  "date": "2025-10-10T07:39:53+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD SELL 3966 - 3970\n\n🚨 SL : 3973\n\n💵 TP : 3963, 3960, 3956\n\nRISK SMART, MANAGE RISK WISELY  ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "sell",
+   "entry_low": 3966.0,
+   "entry_high": 3970.0,
+   "sl": 3973.0,
+   "tps": [
+    3963.0,
+    3960.0,
+    3956.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new sell order."
+  },
+  "regex": {
+   "side": "sell",
+   "sl": 3973.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 24266,
+  "date": "2025-10-15T12:21:41+00:00",
+  "text": "Gold Buy Now @ 4182 - 4179\n\nSl: 4175\n\nTP1: 4185\nTP2: 4192",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4179.0,
+   "entry_high": 4182.0,
+   "sl": 4175.0,
+   "tps": [
+    4185.0,
+    4192.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4175.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 24975,
+  "date": "2025-11-13T06:24:05+00:00",
+  "text": "Gold Sell Now @ 4207 - 4211\n\nSL: 4214\n\nTP: 4200",
+  "gemini": {
+   "kind": "entry",
+   "side": "sell",
+   "entry_low": 4207.0,
+   "entry_high": 4211.0,
+   "sl": 4214.0,
+   "tps": [
+    4200.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit for a new sell order."
+  },
+  "regex": {
+   "side": "sell",
+   "sl": 4214.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 22621,
+  "date": "2025-12-19T07:55:53+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD BUY 4323 - 4319\n\n🚨 SL : 4316\n\n💵 TP : 4326, 4329, 4333\n\nRISK SMART, MANAGE RISK WISELY  ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4319.0,
+   "entry_high": 4323.0,
+   "sl": 4316.0,
+   "tps": [
+    4326.0,
+    4329.0,
+    4333.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4316.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 26320,
+  "date": "2026-01-19T04:24:12+00:00",
+  "text": "Gold Buy Now @ 4662 - 4659\n\nSL: 4656\n\nTP: Open",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4659.0,
+   "entry_high": 4662.0,
+   "sl": 4656.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and buy direction for a new trade."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4656.0,
+   "tp_mode": null
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 23189,
+  "date": "2026-01-21T07:09:28+00:00",
+  "text": "Let's Go - I'm Buying Gold now! ↗️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 0.9,
+   "reason": "The post explicitly states an intent to buy gold now."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 23260,
+  "date": "2026-01-23T06:51:09+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD BUY 4952 - 4947\n\n🚨 SL : 4945\n\n💵 TP : 4955, 4958, 4962\n\nRISK SMART, MANAGE RISK WISELY  ‼️ ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4947.0,
+   "entry_high": 4952.0,
+   "sl": 4945.0,
+   "tps": [
+    4955.0,
+    4958.0,
+    4962.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4945.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 26508,
+  "date": "2026-01-26T13:38:42+00:00",
+  "text": "Gold Buy Now @ 5063 - 5059\n\nSL: 5055\n\nTP: 100/200Pips",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 5059.0,
+   "entry_high": 5063.0,
+   "sl": 5055.0,
+   "tps": [
+    100.0,
+    200.0
+   ],
+   "tp_unit": "pips",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 5055.0,
+   "tp_mode": "pips"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 23543,
+  "date": "2026-02-05T08:20:38+00:00",
+  "text": "Trade Active Profit Now\n\nGOLD HIT 100PIPS FROM HIGHEST ✅\n\nTake profit or close all, set breakeven for zero risk if you want",
+  "gemini": {
+   "kind": "update",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "close_all",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": true,
+   "confidence": 0.9,
+   "reason": "The post explicitly instructs to take profit or close all positions."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 24366,
+  "date": "2026-04-06T07:17:45+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD BUY 4650 - 4645\n\n🚨 SL : 4640\n\n💵 TP : 4655, 4660, 4670\n\nRISK SMART, MANAGE RISK WISELY  ‼️ ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4645.0,
+   "entry_high": 4650.0,
+   "sl": 4640.0,
+   "tps": [
+    4655.0,
+    4660.0,
+    4670.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4640.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 24512,
+  "date": "2026-04-13T08:20:30+00:00",
+  "text": "If you caught 2 times Buy Gold with profit, let's show it.\n\nFlex your profit here 👉 ⚡️ @ZantTrader",
+  "gemini": {
+   "kind": "noise",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "none",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post is a request for users to share their profit screenshots and contains no trading instructions."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 25003,
+  "date": "2026-05-06T07:48:14+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD SELL 4676 - 4681\n\n🚨 SL : 4686\n\n💵 TP : 4671, 4666, 4656\n\nRISK SMART, MANAGE RISK WISELY  ‼️ ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "sell",
+   "entry_low": 4676.0,
+   "entry_high": 4681.0,
+   "sl": 4686.0,
+   "tps": [
+    4671.0,
+    4666.0,
+    4656.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new sell order."
+  },
+  "regex": {
+   "side": "sell",
+   "sl": 4686.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gary",
+  "msg_id": 28637,
+  "date": "2026-05-07T11:27:37+00:00",
+  "text": "Gold moving nicely as mapping plan ✅\n\nNow running profit at 100 pips, lets close half and shifted stop loss to breakeven. \n\nGood job for staying disciplined and comeback is real !",
+  "gemini": {
+   "kind": "update",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "close_partial",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": true,
+   "confidence": 1.0,
+   "reason": "The post explicitly instructs to close half and move stop loss to breakeven for an existing trade."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 25309,
+  "date": "2026-05-21T07:46:14+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD BUY 4515 - 4510\n\n🚨 SL : 4504\n\n💵 TP : 4520, 4525, 4535\n\nRISK SMART, MANAGE RISK WISELY  ‼️ ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4510.0,
+   "entry_high": 4515.0,
+   "sl": 4504.0,
+   "tps": [
+    4520.0,
+    4525.0,
+    4535.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4504.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 25464,
+  "date": "2026-05-28T08:10:20+00:00",
+  "text": "📊😉😌😍🥰⚡️⚡️⚡️⚡️\n\n💰 GOLD SELL 4393 - 4400\n\n🚨 SL : 4404\n\n💵 TP : 4388, 4383, 4373\n\nRISK SMART, MANAGE RISK WISELY  ‼️ ‼️",
+  "gemini": {
+   "kind": "entry",
+   "side": "sell",
+   "entry_low": 4393.0,
+   "entry_high": 4400.0,
+   "sl": 4404.0,
+   "tps": [
+    4388.0,
+    4383.0,
+    4373.0
+   ],
+   "tp_unit": "price",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new sell order."
+  },
+  "regex": {
+   "side": "sell",
+   "sl": 4404.0,
+   "tp_mode": "price"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 25713,
+  "date": "2026-06-08T13:53:12+00:00",
+  "text": "See chart now bro, Gold hit 2nd Sell Zone waterfall 🤑",
+  "gemini": {
+   "kind": "noise",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "none",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post is a market commentary about a zone being hit and does not provide an actionable trade instruction."
+  },
+  "regex": null
+ },
+ {
+  "channel": "gary",
+  "msg_id": 29178,
+  "date": "2026-06-11T07:18:49+00:00",
+  "text": "Gold Buy Now slowly @ 4103 - 4097\n\nSl: 4093\n\nTP: 50/100Pips",
+  "gemini": {
+   "kind": "entry",
+   "side": "buy",
+   "entry_low": 4097.0,
+   "entry_high": 4103.0,
+   "sl": 4093.0,
+   "tps": [
+    50.0,
+    100.0
+   ],
+   "tp_unit": "pips",
+   "is_addon": false,
+   "action": "open",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": false,
+   "confidence": 1.0,
+   "reason": "The post provides a clear entry zone, stop loss, and take profit targets for a new buy order."
+  },
+  "regex": {
+   "side": "buy",
+   "sl": 4093.0,
+   "tp_mode": "pips"
+  }
+ },
+ {
+  "channel": "gsn",
+  "msg_id": 26124,
+  "date": "2026-06-19T09:30:23+00:00",
+  "text": "Trade Active Profit Now\n\nGOLD HIT 57PIPS FROM HIGHEST ✅\n\nTake profit or close all, set breakeven for zero risk if you want",
+  "gemini": {
+   "kind": "update",
+   "side": "none",
+   "entry_low": 0.0,
+   "entry_high": 0.0,
+   "sl": 0.0,
+   "tps": [],
+   "tp_unit": "none",
+   "is_addon": false,
+   "action": "close_all",
+   "new_sl": 0.0,
+   "new_tp": 0.0,
+   "refers_to_prior_trade": true,
+   "confidence": 1.0,
+   "reason": "The post explicitly instructs to take profit or close all positions."
+  },
+  "regex": null
+ }
+]

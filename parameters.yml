@@ -123,6 +123,23 @@ live:
   daily_consec_loss_stop: 2
   max_spread_pips: 5                    # skip entry if live spread exceeds this
   max_price_drift_pct: 1.0              # skip if signal entry is >this% from live price (stale)
+  defaults:                             # SAFETY NET attached to every order (never naked)
+    sl_pips: 90                         # median stop of the 271-trade locked stream
+    tp_pips: 50                         # median first target (median, not mean: outliers)
+  follow_provider_updates: false        # ★ false = our exits are OUR logic (Strategy A:
+                                        #   close at TP1). Updates are classified + journalled
+                                        #   but never acted on. Honouring them changes the exit
+                                        #   distribution the backtest measured AND weakens the
+                                        #   GFT "own logic" position. Backtest before enabling.
+  allow_default_sl_entry: false         # ★ false = match the backtest exactly. The default SL
+                                        #   still rides on every order; this flag only controls
+                                        #   whether a signal with NO stated SL may be entered
+                                        #   at all (~13 posts/yr, an untested trade class).
+  classifier:                           # Gemini front door (src/gemini_classifier.py)
+    provider: gemini
+    model: gemini-3.1-flash-lite        # 2.5-flash-lite retires 2026-10-16
+    temperature: 0
+    on_error: skip                      # classifier down -> take no new trades
   llm_layer:                            # Claude second-opinion parser (src/llm_parser.py)
     enabled: true
     model: claude-opus-5

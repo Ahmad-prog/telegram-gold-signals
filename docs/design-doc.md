@@ -338,6 +338,34 @@ only, ever (GFT ruling condition).
 
 ---
 
+## 11b. Live pipeline (built 2026-08-14)
+
+Message → decision, implemented in `src/pipeline.py`:
+
+1. **Classify** (`gemini_classifier.py`, `gemini-3.1-flash-lite`, temp 0, strict JSON)
+   → `entry` | `update` | `noise`. Never places a trade itself.
+2. **Cross-check** every entry against the regex parser. Side or SL disagreement → SKIP.
+3. **Guardrails** (`llm_parser.validate_extraction`, shared by both LLM providers):
+   no invented numbers, SL/TP geometry, SL band, 10% TP sanity, live-price drift.
+4. **Strategy gates**: sell-only, fresh-only, SL 40–120p, one-trade-at-a-time.
+5. **Size**: `lots = risk% x equity / (SL_pips x $10)`, floored to the 0.01 step.
+6. **Register** PENDING in `trade_registry.py` (SQLite), then the executor places the
+   order with SL+TP **attached to the order itself** — a position can never run naked.
+
+**Correlation of updates** (`TradeRegistry.correlate`): edit of a known `msg_id` →
+`reply_to_msg_id` → the sole open trade → else alert. Never guesses.
+
+**Two gates default to OFF so launch matches the backtest exactly:**
+
+| Flag | Default | Why |
+|---|---|---|
+| `allow_default_sl_entry` | `false` | Entering a signal with no stated SL is an untested trade class (~13 posts/yr). The 90p default still rides on every order as the safety net. |
+| `follow_provider_updates` | `false` | Acting on "move SL to BE" changes the exit distribution the backtest measured (Strategy A = close at TP1) and weakens the GFT "own logic" position. Updates are classified and journalled, never acted on. |
+
+Defaults `sl_pips: 90` / `tp_pips: 50` are the medians of the 271-trade locked stream.
+Note the stop distance does **not** control drawdown — position sizing does; any SL
+distance yields the same % loss. The default is chosen to keep lot sizes usable.
+
 ## 12. File inventory
 
 **Current main branch (lean layout):**

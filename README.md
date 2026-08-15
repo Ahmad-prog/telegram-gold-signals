@@ -38,8 +38,18 @@ src/
   login.py             one-time Telegram login (file-driven, no prompt)
   smoke_test.py        end-to-end test: telegram -> parse -> gates -> alert
   list_chats.py        helper: find chat/sender handles
+  gemini_classifier.py Gemini front door: entry / update / noise + extraction
+  llm_parser.py        Claude second-opinion parser + SHARED guardrails
+  trade_registry.py    SQLite registry: msg_id -> ticket, state machine
+  pipeline.py          orchestrator: classify -> cross-check -> gates -> registry
+  paper_run.py         end-to-end paper run over recorded messages (no broker)
+  audit_channel.py     score any candidate channel against the hiring bar
 tests/
-  validate_engine.py   12 synthetic-candle engine tests (must stay green)
+  validate_engine.py       12 synthetic-candle engine tests
+  test_pipeline.py         30 registry/pipeline tests (no API)
+  test_llm_guardrails.py   20 guardrail tests (no API)
+  test_gemini_cases.py     15 classifier cases (cassette replay, free)
+  test_gemini_corpus.py    26 real messages vs regex (cassette replay, free)
 data_archive/          frozen research inputs (gzipped) — restores data/, see its README
 docs/
   design-doc.md        ★ normative spec: strategy, exact semantics, repro checkpoints
@@ -74,5 +84,6 @@ git checkout research-v1
 
 - [x] Data pipeline, engine, parsers, 3-year + 1-year studies
 - [x] Strategy locked (`design-doc.md`, 2026-06-30) + GFT compliance confirmed in writing
-- [ ] **Next:** `listener.py` + `executor.py` + `watchdog.py` (docs/design-doc.md §11) — paper mode on MT5 demo first
-- [ ] 4–6 weeks paper validation → one GFT evaluation
+- [x] Gemini classifier + trade registry + pipeline, **77 tests green**, paper run end-to-end
+- [ ] **Next:** `listener.py` (live Telegram feed) + `executor.py` (MT5 order_send) + `watchdog.py`
+- [ ] 4–6 weeks paper validation on MT5 demo → one GFT evaluation
