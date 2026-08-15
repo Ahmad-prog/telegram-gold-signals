@@ -31,6 +31,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from llm_parser import validate_extraction          # shared guardrails
 from trade_registry import TradeRegistry, lots_for  # noqa: F401  (re-exported)
+from risk_state import RiskState
 
 PIP = 0.10
 
@@ -71,10 +72,12 @@ def resolve_sl_tp(side: str, entry: float, sig, cfg: dict) -> tuple[float, float
 
 def handle_message(msg: dict, reg: TradeRegistry, cfg: dict, classify_fn,
                    live_price: float | None = None, regex_sig: dict | None = None,
-                   equity: float = 100_000.0, risk_pct: float | None = None) -> dict:
+                   equity: float = 100_000.0, risk_pct: float | None = None,
+                   risk: RiskState | None = None) -> dict:
     """msg: {msg_id, channel, date, text, reply_to (opt), is_edit (opt)}"""
     live = cfg["live"]
     mid = msg["msg_id"]
+    risk = risk if risk is not None else RiskState(reg, cfg)
 
     def out(decision, reason, **kw):
         d = {"msg_id": mid, "decision": decision, "reason": reason, **kw}
@@ -145,6 +148,12 @@ def handle_message(msg: dict, reg: TradeRegistry, cfg: dict, classify_fn,
     if reg.has_open():
         return out("skip", "a trade is already open (one at a time)")
 
+    # kill switch + daily consecutive-loss stop, evaluated from closed history
+    allowed, why = risk.can_trade(msg.get("date"))
+    if not allowed:
+        reg.mark_skipped(mid, why)
+        return out("skip", why, risk_block=True)
+
     entry = live_price if live_price else ((sig.entry_low + sig.entry_high) / 2
                                            if sig.entry_low and sig.entry_high else None)
     if not entry:
@@ -180,9 +189,9 @@ def handle_message(msg: dict, reg: TradeRegistry, cfg: dict, classify_fn,
             reg.mark_skipped(mid, "regex/LLM SL disagreement")
             return out("skip", "DISAGREE on SL (regex vs classifier)", conflict=True)
 
-    rungs = live.get("risk_ladder_pct", [1.0])
-    risk = risk_pct if risk_pct is not None else rungs[0]
-    lots = lots_for(risk, equity, sl_pips)
+    # risk ladder: rung is derived from consecutive losses since the last win
+    rung = risk_pct if risk_pct is not None else risk.current_risk_pct()
+    lots = lots_for(rung, equity, sl_pips)
     if lots <= 0:
         return out("skip", f"computed lots below broker minimum (SL {sl_pips:.0f}p)")
 
@@ -191,4 +200,5 @@ def handle_message(msg: dict, reg: TradeRegistry, cfg: dict, classify_fn,
                        sl_src, tp_src)
     return out("take", f"entry accepted ({sl_src} SL / {tp_src} TP)",
                side=side, entry=round(entry, 2), sl=sl, tp=tp,
-               sl_pips=round(sl_pips), lots=lots, risk_pct=risk)
+               sl_pips=round(sl_pips), lots=lots, risk_pct=rung,
+               rung_index=risk.rung_index())
